@@ -46,7 +46,7 @@ namespace PhotosApp.Clients
                 case HttpStatusCode.NotFound:
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.Forbidden:
-                    return new PhotoEntity[0];
+                    return Array.Empty<PhotoEntity>();
                 default:
                     throw new UnexpectedStatusCodeException(response.StatusCode);
             }

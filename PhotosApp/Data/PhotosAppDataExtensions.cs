@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PhotosApp.Areas.Identity.Data;
 using PhotosApp.Services.TicketStores;
 
 namespace PhotosApp.Data
@@ -23,9 +24,12 @@ namespace PhotosApp.Data
                     if (env.IsDevelopment())
                     {
                         scope.ServiceProvider.GetRequiredService<PhotosDbContext>().Database.Migrate();
+                        scope.ServiceProvider.GetRequiredService<UsersDbContext>().Database.Migrate();
 
                         var photosDbContext = scope.ServiceProvider.GetRequiredService<PhotosDbContext>();
+                        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<PhotosAppUser>>();
                         photosDbContext.SeedWithSamplePhotosAsync().Wait();
+                        userManager.SeedWithSampleUsersAsync().Wait();
                     }
                 }
                 catch (Exception e)
@@ -154,7 +158,7 @@ namespace PhotosApp.Data
                     UserName = "vicky@gmail.com",
                     Email = "vicky@gmail.com"
                 };
-                await userManager.RegisterUserIfNotExists(user, "Pass!2");
+                await userManager.RegisterUserIfNotExists(user, "v");
             }
 
             {
@@ -164,7 +168,7 @@ namespace PhotosApp.Data
                     UserName = "cristina@gmail.com",
                     Email = "cristina@gmail.com"
                 };
-                await userManager.RegisterUserIfNotExists(user, "Pass!2");
+                await userManager.RegisterUserIfNotExists(user, "c");
             }
 
             {
@@ -174,7 +178,7 @@ namespace PhotosApp.Data
                     UserName = "dev@gmail.com",
                     Email = "dev@gmail.com"
                 };
-                await userManager.RegisterUserIfNotExists(user, "Pass!2");
+                await userManager.RegisterUserIfNotExists(user, "d");
             }
         }
 
